@@ -1,7 +1,6 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
-
 const charactersArray = [];
 
 const scrapper = async (url) => {
@@ -18,14 +17,13 @@ const scrapper = async (url) => {
 };
 
 const getAllCharacters = async (page, browser) => {
-  let isElementDisplayed = true; // Cambiado a let
+  let isElementDisplayed = true;
 
-  
   while (isElementDisplayed) {
     try {
       await page.waitForSelector(".show_more", { timeout: 30000 });
       await page.$eval(".show_more", (el) => el.click());
-      // Actualiza la variable isElementDisplayed después de hacer clic en el botón
+
       isElementDisplayed = await page.evaluate(() => {
         const element = document.querySelector("div.show_more_container");
         const computedStyle = window.getComputedStyle(element);
@@ -37,9 +35,6 @@ const getAllCharacters = async (page, browser) => {
     }
   }
 
-
-  console.log("aqui");
-
   await page.waitForSelector(".databank-content", { timeout: 100000 });
   const arrayDivsCharacters = await page.$$(".databank-content");
 
@@ -48,11 +43,8 @@ const getAllCharacters = async (page, browser) => {
       el.textContent.trim()
     );
     let img = await character.$eval("a img", (el) => el.dataset.src);
-    const descriptionSelector = "p.desc";
-    let description = await character.$eval(
-      descriptionSelector,
-      (el) => el.textContent
-    );
+
+    let description = await character.$eval("p.desc", (el) => el.textContent);
 
     const objetCharacters = {
       name,

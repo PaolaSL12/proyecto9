@@ -5,12 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "scrap": "node src/utils/scrapperLaunch.js"
+    "scrap": "node utils/scrapperLaunch.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "mongoose": "^8.2.1",
     "puppeteer": "^22.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
